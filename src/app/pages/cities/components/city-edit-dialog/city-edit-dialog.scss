@@ -1,0 +1,244 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  color: #303447;
+  font-family: inherit;
+}
+
+.city-dialog {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  background: #fff;
+}
+
+.city-dialog__title {
+  margin: 0 0 20px;
+  color: #303447;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.city-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.city-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  min-height: 52px;
+  padding: 7px 15px 8px;
+  box-sizing: border-box;
+
+  border: 1px solid #e6e8ef;
+  border-radius: 15px;
+  background: #f5f5f5;
+
+  box-shadow:
+    0 2px 5px rgb(25 32 55 / 10%),
+    0 1px 2px rgb(25 32 55 / 5%);
+
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.city-field--full {
+  grid-column: 1 / -1;
+}
+
+.city-field:focus-within {
+  border: 2px solid;
+  border-color: #536fe0;
+}
+
+.city-field__label {
+  display: block;
+  margin-bottom: 2px;
+  color: #777b91;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.city-field__input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+
+  color: #303447;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+
+  box-sizing: border-box;
+}
+
+.city-field__input:focus-visible {
+  outline: none;
+}
+
+.city-field__input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.city-field__input[type='number']::-webkit-inner-spin-button,
+.city-field__input[type='number']::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+/* Кнопки */
+.city-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 8px;
+}
+
+.city-button {
+  min-height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 15px;
+
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.city-button:active {
+  transform: translateY(1px);
+}
+
+.city-button:focus-visible {
+  outline: 3px solid rgb(83 111 224 / 30%);
+  outline-offset: 3px;
+}
+
+.city-button--cancel {
+  background: transparent;
+  color: #e84b2c;
+}
+
+.city-button--cancel:hover {
+  background: #fff2ee;
+}
+
+.city-button--save {
+  background: #536fda;
+  color: #fff;
+  box-shadow: 0 4px 10px rgb(83 111 218 / 18%);
+}
+
+.city-button--save:hover {
+  background: #425fca;
+  box-shadow: 0 6px 14px rgb(83 111 218 / 25%);
+}
+
+.city-button--save:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Адаптация для узкого экрана */
+@media (max-width: 480px) {
+  .city-dialog {
+    padding: 4px;
+  }
+
+  .city-dialog__title {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .city-form {
+    gap: 12px;
+  }
+
+  .city-field {
+    padding-inline: 11px;
+    border-radius: 12px;
+  }
+
+  .city-dialog__actions {
+    margin-top: 22px;
+    gap: 8px;
+  }
+
+  .city-button {
+    min-height: 44px;
+    padding-inline: 16px;
+  }
+}
+
+@media (max-width: 340px) {
+  .city-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .city-field--full {
+    grid-column: auto;
+  }
+}
+
+.date-field {
+  width: 100%;
+  min-width: 0;
+  height: 8px;
+  display: flex;
+
+  ::ng-deep [data-appearance] {
+    background: transparent;
+  }
+
+  ::ng-deep input {
+    padding-left: 16px;
+    border: none;
+    background: transparent;
+    font: inherit;
+    font-size: 15px;
+    color: #303447;
+  }
+}
+
+.city-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.city-group--full {
+  grid-column: 1 / -1;
+}
+
+.city-field__error {
+  display: block;
+  margin: 6px 0 0 15px;
+  color: #e84b2c;
+  font-size: 12px;
+  line-height: 1.2;
+}

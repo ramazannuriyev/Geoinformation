@@ -1,0 +1,111 @@
+<div class="city-dialog">
+  <h2 class="city-dialog__title">{{ city.name }}</h2>
+
+  <form [formGroup]="editForm" (ngSubmit)="save()">
+    <div class="city-form">
+      <!-- Регион -->
+      <div class="city-group city-group--full">
+        <label class="city-field">
+          <span class="city-field__label">
+            {{ 'dialog.region' | translate: languageService.current() }}
+          </span>
+          <input class="city-field__input" type="text" formControlName="region" />
+        </label>
+        @if (editForm.controls.region.touched && editForm.controls.region.hasError('required')) {
+          <span class="city-field__error">
+            {{ 'dialog.error.required.field' | translate: languageService.current() }}
+          </span>
+        }
+      </div>
+
+      <!-- Население -->
+      <div class="city-group">
+        <label class="city-field">
+          <span class="city-field__label">
+            {{ 'dialog.population' | translate: languageService.current() }}
+          </span>
+          <input class="city-field__input" type="number" formControlName="population" />
+        </label>
+        @if (
+          editForm.controls.population.touched && editForm.controls.population.hasError('required')
+        ) {
+          <span class="city-field__error">
+            {{ 'dialog.error.required.field' | translate: languageService.current() }}
+          </span>
+        } @else if (
+          editForm.controls.population.touched && editForm.controls.population.hasError('min')
+        ) {
+          <span class="city-field__error">
+            {{ 'dialog.error.negative' | translate: languageService.current() }}
+          </span>
+        }
+      </div>
+
+      <!-- Дата основания -->
+      <tui-textfield class="date-field">
+        <input
+          tuiInputDate
+          formControlName="foundedDate"
+          [placeholder]="'dialog.founded.choose' | translate: languageService.current()"
+        />
+        <tui-calendar *tuiDropdown></tui-calendar>
+      </tui-textfield>
+
+      <!-- Долгота -->
+      <div class="city-group">
+        <label class="city-field">
+          <span class="city-field__label">
+            {{ 'dialog.longitude' | translate: languageService.current() }}
+          </span>
+          <input class="city-field__input" type="number" step="any" formControlName="longitude" />
+        </label>
+        @if (
+          editForm.controls.longitude.touched && editForm.controls.longitude.hasError('required')
+        ) {
+          <span class="city-field__error">
+            {{ 'dialog.error.required.field' | translate: languageService.current() }}
+          </span>
+        } @else if (
+          editForm.controls.longitude.touched && editForm.controls.longitude.hasError('outOfRange')
+        ) {
+          <span class="city-field__error">
+            {{ 'dialog.longitude.error' | translate: languageService.current() }}
+          </span>
+        }
+      </div>
+
+      <!-- Широта -->
+      <div class="city-group">
+        <label class="city-field">
+          <span class="city-field__label">
+            {{ 'dialog.latitude' | translate: languageService.current() }}
+          </span>
+          <input class="city-field__input" type="number" step="any" formControlName="latitude" />
+        </label>
+        @if (
+          editForm.controls.latitude.touched && editForm.controls.latitude.hasError('required')
+        ) {
+          <span class="city-field__error">
+            {{ 'dialog.error.required.field' | translate: languageService.current() }}
+          </span>
+        } @else if (
+          editForm.controls.latitude.touched && editForm.controls.latitude.hasError('outOfRange')
+        ) {
+          <span class="city-field__error">
+            {{ 'dialog.latitude.error' | translate: languageService.current() }}
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="city-dialog__actions">
+      <button class="city-button city-button--cancel" type="button" (click)="cancel()">
+        {{ 'dialog.cancel' | translate: languageService.current() }}
+      </button>
+
+      <button class="city-button city-button--save" type="submit">
+        {{ 'dialog.save' | translate: languageService.current() }}
+      </button>
+    </div>
+  </form>
+</div>

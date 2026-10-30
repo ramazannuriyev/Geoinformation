@@ -1,0 +1,106 @@
+<div class="card">
+  <div class="filters">
+    <select
+      class="country-select"
+      [value]="countryFilter()"
+      (change)="onCountryFilterChange($event)"
+    >
+      <option value="">
+        {{ 'cities.filter.allCountries' | translate: languageService.current() }}
+      </option>
+
+      @if (countriesForFilter.isLoading()) {
+        <option disabled>{{ 'cities.loading' | translate: languageService.current() }}</option>
+      } @else if (countriesForFilter.error()) {
+        <option disabled>
+          {{ 'coutries.loading.error' | translate: languageService.current() }}
+        </option>
+      } @else {
+        @for (country of countriesForFilter.value() ?? []; track country.wikiDataId) {
+          <option [value]="country.code">
+            {{ country.name }}
+          </option>
+        }
+      }
+    </select>
+
+    <div class="search-box">
+      <tui-icon icon="@tui.search" class="search-icon"></tui-icon>
+
+      <input
+        placeholder="{{ 'search.placeholder' | translate: languageService.current() }}"
+        (input)="applyFilter($event)"
+      />
+    </div>
+  </div>
+
+  @if (citiesResource.error()) {
+    <p>{{ 'countries.error' | translate: languageService.current() }}.</p>
+  }
+
+  <tui-loader [loading]="citiesResource.isLoading()" [overlay]="true">
+    <table tuiTable [columns]="columns" class="table">
+      <thead>
+        <tr>
+          <th tuiTd (click)="toggleSort('countryCode')" class="sortable">
+            {{ 'cities.col.country' | translate: languageService.current() }}
+            <span class="sort-arrow">
+              {{ sortKey() === 'countryCode' && sortDirection() === 'desc' ? '↓' : '↑' }}
+            </span>
+          </th>
+
+          <th tuiTd (click)="toggleSort('name')" class="sortable">
+            {{ 'cities.col.name' | translate: languageService.current() }}
+
+            <span class="sort-arrow">
+              {{ sortKey() === 'name' && sortDirection() === 'desc' ? '↓' : '↑' }}
+            </span>
+          </th>
+
+          <th tuiTd (click)="toggleRegionSort()" class="sortable">
+            {{ 'cities.col.region' | translate: languageService.current() }}
+
+            <span class="sort-arrow">
+              {{ regionSortActive() ? (regionSortDirection() === 'desc' ? '↓' : '↑') : '↑' }}
+            </span>
+          </th>
+
+          <th tuiTd (click)="toggleSort('population')" class="sortable">
+            {{ 'cities.col.population' | translate: languageService.current() }}
+
+            <span class="sort-arrow">
+              {{ sortKey() === 'population' && sortDirection() === 'desc' ? '↓' : '↑' }}
+            </span>
+          </th>
+
+          <th tuiTd></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (city of cities(); track city.id) {
+          <tr>
+            <td tuiTd>{{ city.country }}</td>
+            <td tuiTd>{{ city.name }}</td>
+            <td tuiTd>{{ city.region }}</td>
+            <td tuiTd>{{ city.population }}</td>
+            <td tuiTd>
+              <a (click)="openView(city)">
+                <tui-icon icon="@tui.eye"></tui-icon>
+              </a>
+              <a (click)="openEdit(city)">
+                <tui-icon icon="@tui.pencil"></tui-icon>
+              </a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <tui-pagination
+      [length]="totalPages()"
+      [index]="pageIndex()"
+      (indexChange)="onPageIndexChange($event)"
+    />
+  </tui-loader>
+</div>

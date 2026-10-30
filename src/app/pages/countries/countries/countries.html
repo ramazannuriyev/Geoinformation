@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="search-box">
+    <tui-icon icon="@tui.search" class="search-icon"></tui-icon>
+
+    <input
+      placeholder="{{ 'search.placeholder' | translate: languageService.current() }}"
+      (input)="applyFilter($event)"
+    />
+  </div>
+
+  @if (countriesResource.error()) {
+    <p>{{ 'countries.error' | translate: languageService.current() }}</p>
+  } @else {
+    <tui-loader [loading]="countriesResource.isLoading()" [overlay]="true">
+      <table tuiTable [columns]="columns" class="table">
+        <thead>
+          <tr>
+            <th tuiTd>{{ 'countries.col.id' | translate: languageService.current() }}</th>
+            <th tuiTd></th>
+            <th tuiTd (click)="toggleSort('name')" class="sortable">
+              {{ 'countries.col.name' | translate: languageService.current() }}
+              <span class="sort-arrow">{{
+                sortKey() === 'name' && sortDirection() === 'desc' ? '↓' : '↑'
+              }}</span>
+            </th>
+            <th tuiTd (click)="toggleSort('code')" class="sortable">
+              {{ 'countries.col.code' | translate: languageService.current() }}
+              <span class="sort-arrow">{{
+                sortKey() === 'code' && sortDirection() === 'desc' ? '↓' : '↑'
+              }}</span>
+            </th>
+            <th tuiTd>{{ 'countries.col.currencies' | translate: languageService.current() }}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (country of countries(); track country.wikiDataId) {
+            <tr>
+              <td tuiTd>{{ country.wikiDataId }}</td>
+
+              <td tuiTd>
+                <a [routerLink]="['/cities']" [queryParams]="{ country: country.code }">
+                  <tui-icon icon="@tui.external-link"></tui-icon>
+                </a>
+              </td>
+
+              <td tuiTd>{{ country.name }}</td>
+              <td tuiTd>{{ country.code }}</td>
+              <td tuiTd>{{ country.currencyCodes.join(', ') }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <tui-pagination
+        [length]="totalPages()"
+        [index]="pageIndex()"
+        (indexChange)="onPageIndexChange($event)"
+      />
+    </tui-loader>
+  }
+</div>

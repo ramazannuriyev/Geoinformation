@@ -1,0 +1,38 @@
+<div class="dialog-content">
+  <h2>{{ city.name }}</h2>
+  <div class="info-grid">
+    <label>
+      {{ 'dialog.coutry' | translate: languageService.current() }}
+      <span class="value">{{ city.country }}</span>
+    </label>
+
+    <label>
+      {{ 'dialog.region' | translate: languageService.current() }}
+      <span class="value">{{ city.region }}</span>
+    </label>
+
+    <label>
+      {{ 'dialog.population' | translate: languageService.current() }}
+      <span class="value">{{ city.population }}</span>
+    </label>
+
+    <label>
+      {{ 'dialog.founded' | translate: languageService.current() }}
+
+      <span class="value">{{ city.foundedDate }}</span>
+    </label>
+
+    <label>
+      {{ 'dialog.longitude' | translate: languageService.current() }}
+      <span class="value">{{ city.longitude }}</span>
+    </label>
+
+    <label>
+      {{ 'dialog.latitude' | translate: languageService.current() }}
+      <span class="value">{{ city.latitude }}</span>
+    </label>
+  </div>
+  <div class="actions">
+    <button (click)="close()">{{ 'dialog.close' | translate: languageService.current() }}</button>
+  </div>
+</div>

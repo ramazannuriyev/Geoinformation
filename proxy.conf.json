@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "https://geodb-free-service.wirefreethought.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": "/v1/geo"
+    }
+  }
+}
